@@ -8,9 +8,14 @@ class FileListBuilder(object):
     __apexClasses__ = []
     __auraComponents__ = []
     __lwcComponents__ = []
+
     APEX_REGEX_PATTERN = "[\w\d\s]*\.cls$"
     COMPONENTS_REGEX_PATTERN ="[\w\d\s]*$"
     MESSAGE_FORCEAPP_FOLDER_NOT_FOUND = "force-app folder not found in a given folder"
+
+    __apexClassPath__ = {}
+    __lwcComponentPath__ = {}
+    __auraComponentPath__ = {}
     def __init__(self, projectPath):
         self.__path__=projectPath
         self.__makeFileList()
@@ -46,7 +51,7 @@ class FileListBuilder(object):
         for entry in os.scandir(self.__apexClassesFolderPath__):            
             if entry.is_file() and not entry.path.endswith("xml"):
                 self.__getClassOrComponentName(entry.path, True, False)
-                
+
     def __getAuraComponentsList(self):
         for entry in os.scandir(self.__auraComponentsFolderPath__):
             if entry.is_file():
@@ -59,11 +64,17 @@ class FileListBuilder(object):
         match = regex.search(path)        
         if match:            
             if isClass:
-                 self.__apexClasses__.append(match.group(0)[:-4])
+                 name = match.group(0)[:-4]
+                 self.__apexClasses__.append(name)
+                 self.__apexClassPath__[name] = path
             elif not isClass and isAura:
-                self.__auraComponents__.append(match.group(0))
+                name = match.group(0)
+                self.__auraComponents__.append(name)
+                self.__auraComponentPath__[name] = path
             elif not isClass and not isAura:
-                self.__lwcComponents__.append(match.group(0))
+                name = match.group(0)
+                self.__lwcComponents__.append(name)
+                self.__lwcComponentPath__[name] = path
 
     def getAuraComponents(self):
         return self.__auraComponents__
