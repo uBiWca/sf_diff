@@ -75,15 +75,24 @@ class FileListBuilder(object):
                 name = match.group(0)
                 self.__lwcComponents__.append(name)
                 self.__lwcComponentPath__[name] = path
-
+    #Getters here
     def getAuraComponents(self):
         return self.__auraComponents__
+
+    def getAuraComponentPath(self, componentName):
+        return self.__auraComponentPath__.get(componentName)
 
     def getLWCComponents(self):
         return self.__lwcComponents__
 
+    def getLWCComponentPath(self, componentName):
+        return self.__lwcComponentPath__.get(componentName)
+
     def getApexClasses(self):
         return self.__apexClasses__
+
+    def getApexClassPath(self, className):
+        return self.__apexClassesFolderPath__.get(className)
 
     def printList(self):
         
