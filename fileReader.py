@@ -20,7 +20,7 @@ class FileListBuilder(object):
         self.__path__=projectPath
         self.__makeFileList()
         
-    def __makeFileList(self):        
+    def __makeFileList__(self):        
         for entry in os.scandir(self.__path__):
             if entry.is_dir() and entry.path.endswith("force-app"):
                 self.__dirList__ = entry.path
@@ -42,24 +42,24 @@ class FileListBuilder(object):
         if self.__apexClassesFolderPath__:
             self.__getApexClassesList()            
         
-    def __getLWCComponentsList(self):
+    def __getLWCComponentsList__(self):
         for entry in os.scandir(self.__lwcComponentsFolderPath__):
             if entry.is_dir():                
                 self.__getClassOrComponentName(entry.path, False, False)
                
-    def __getApexClassesList(self):
+    def __getApexClassesList__(self):
         for entry in os.scandir(self.__apexClassesFolderPath__):            
             if entry.is_file() and not entry.path.endswith("xml"):
                 self.__getClassOrComponentName(entry.path, True, False)
 
-    def __getAuraComponentsList(self):
+    def __getAuraComponentsList__(self):
         for entry in os.scandir(self.__auraComponentsFolderPath__):
             if entry.is_file():
                 self.__getClassOrComponentName(entry.path, False, True)
 
     # Checks end of the path line to determine is this path of apex class or a component, 
     # extracts it name and adds it to one of lists
-    def __getClassOrComponentName(self, path, isClass, isAura):        
+    def __getClassOrComponentName__(self, path, isClass, isAura):        
         regex = (re.compile(self.COMPONENTS_REGEX_PATTERN),re.compile(self.APEX_REGEX_PATTERN))[isClass]
         match = regex.search(path)        
         if match:            
