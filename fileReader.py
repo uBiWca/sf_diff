@@ -20,7 +20,7 @@ class FileListBuilder(object):
         self.__path__=projectPath
         self.__makeFileList()
         
-    def __makeFileList__(self):        
+    def __makeFileList__    (self):        
         for entry in os.scandir(self.__path__):
             if entry.is_dir() and entry.path.endswith("force-app"):
                 self.__dirList__ = entry.path
